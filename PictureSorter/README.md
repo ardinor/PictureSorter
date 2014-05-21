@@ -7,3 +7,4 @@ TO DO:
 -------------------------
 - SWF support? WebM?
 - Think of a better name
+- Gitignore doesn't seem to work at the moment

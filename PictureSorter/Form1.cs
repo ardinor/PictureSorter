@@ -16,19 +16,19 @@ namespace PictureSorter
         List<string> pictureList;
         int activeIndex;
 
-        private enum ImageFormats
+        static List<string> ImageFormats = new List<string>
         {
-            jpeg,
-            jpg,
-            png,
-            gif,
-            bmp,
-            tiff,
-        }
+            ".jpeg",
+            ".jpg",
+            ".png",
+            ".gif",
+            ".bmp",
+            ".tiff",
+        };
 
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();          
         }
 
         private bool CheckValidImage(string filePath)
@@ -51,17 +51,29 @@ namespace PictureSorter
 
         private void SetActivePicture(List<string> pictureList, int index)
         {
+            bool zoomed = false;
             Image image = Image.FromFile(pictureList[index]);
             activeIndex = index;
             activePictureBox.Image = image;
             if (activePictureBox.Size.Height < image.Height || activePictureBox.Size.Width < image.Width)
             {
                 activePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                zoomed = true;
             }
             else
             {
                 activePictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
-            }            
+            }
+            //imageHeightLabel.Text = "H: " + image.Height;
+            //imageWidthLabel.Text = "W: " + image.Width;
+            //imageInfoLabel
+            //imageInfoLabel.Visible = true;
+            tooltipStrip.Text = "File: " + Path.GetFileName(pictureList[index]) +
+                "   Height: " + image.Height + "   Width: " + image.Width;
+            if (zoomed)
+            {
+                tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + image.Height / activePictureBox.Size.Height;
+            }
         }
 
         private void directorySelect_Click(object sender, EventArgs e)
@@ -80,13 +92,15 @@ namespace PictureSorter
                         pictureList = new List<string>();
                         foreach (string path in Directory.GetFiles(folder))
                         {
-                            if (CheckValid(path))
+                            if (ImageFormats.Contains(Path.GetExtension(path), StringComparer.OrdinalIgnoreCase) && CheckValid(path))
                             {
                                 pictureList.Add(path);
                             }
                         }
                         if (pictureList.Count > 0)
                         {
+                            fileCount.Text = "Total images: " + pictureList.Count;
+                            //imageDetailsLabel.Visible = true;
                             SetActivePicture(pictureList, 0);
                         }                    
                     }
@@ -97,6 +111,33 @@ namespace PictureSorter
                 MessageBox.Show("Failed to open directory: " + ex.Message);
             }
 
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            //need to override IsInputKey
+            //http://msdn.microsoft.com/en-us/library/system.windows.forms.control.keydown%28v=vs.110%29.aspx
+
+            switch (e.KeyCode)
+            {
+                case Keys.Right:
+                case Keys.Up:
+                    if (pictureList.Count <= activeIndex + 1)
+                    {
+                        SetActivePicture(pictureList, activeIndex + 1);
+                        e.Handled = true;
+                    }               
+                    break;
+
+                case Keys.Left:
+                case Keys.Down:
+                    if (pictureList.Count >= activeIndex -1)
+                    {
+                        SetActivePicture(pictureList, activeIndex - 1);
+                        e.Handled = true;
+                    }
+                    break;
+            }            
         }
     }
 }
