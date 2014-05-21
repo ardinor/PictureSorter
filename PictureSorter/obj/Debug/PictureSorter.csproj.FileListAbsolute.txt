@@ -1,1 +1,9 @@
 c:\git\PictureSorter\PictureSorter\bin\Debug\PictureSorter.exe.config
+c:\git\PictureSorter\PictureSorter\bin\Debug\PictureSorter.exe
+c:\git\PictureSorter\PictureSorter\bin\Debug\PictureSorter.pdb
+c:\git\PictureSorter\PictureSorter\obj\Debug\PictureSorter.csprojResolveAssemblyReference.cache
+c:\git\PictureSorter\PictureSorter\obj\Debug\PictureSorter.Form1.resources
+c:\git\PictureSorter\PictureSorter\obj\Debug\PictureSorter.Properties.Resources.resources
+c:\git\PictureSorter\PictureSorter\obj\Debug\PictureSorter.csproj.GenerateResource.Cache
+c:\git\PictureSorter\PictureSorter\obj\Debug\PictureSorter.exe
+c:\git\PictureSorter\PictureSorter\obj\Debug\PictureSorter.pdb
