@@ -1,0 +1,1 @@
+c:\git\PictureSorter\PictureSorter\bin\Debug\PictureSorter.exe.config
