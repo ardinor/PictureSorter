@@ -36,6 +36,8 @@
             this.tooltipStrip = new System.Windows.Forms.ToolStripStatusLabel();
             this.nextButton = new System.Windows.Forms.Button();
             this.previousButton = new System.Windows.Forms.Button();
+            this.addDirectoryButton = new System.Windows.Forms.Button();
+            this.sortDirectoriesLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.activePictureBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -47,7 +49,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.activePictureBox.Location = new System.Drawing.Point(0, 42);
             this.activePictureBox.Name = "activePictureBox";
-            this.activePictureBox.Size = new System.Drawing.Size(762, 520);
+            this.activePictureBox.Size = new System.Drawing.Size(762, 526);
             this.activePictureBox.TabIndex = 0;
             this.activePictureBox.TabStop = false;
             // 
@@ -84,7 +86,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tooltipStrip});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 630);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 636);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(763, 22);
             this.statusStrip1.TabIndex = 7;
@@ -99,7 +101,7 @@
             // nextButton
             // 
             this.nextButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.nextButton.Location = new System.Drawing.Point(726, 568);
+            this.nextButton.Location = new System.Drawing.Point(726, 586);
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(36, 26);
             this.nextButton.TabIndex = 8;
@@ -111,7 +113,7 @@
             // previousButton
             // 
             this.previousButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.previousButton.Location = new System.Drawing.Point(0, 568);
+            this.previousButton.Location = new System.Drawing.Point(0, 586);
             this.previousButton.Name = "previousButton";
             this.previousButton.Size = new System.Drawing.Size(36, 26);
             this.previousButton.TabIndex = 9;
@@ -120,11 +122,36 @@
             this.previousButton.Visible = false;
             this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
             // 
+            // addDirectoryButton
+            // 
+            this.addDirectoryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.addDirectoryButton.Location = new System.Drawing.Point(45, 587);
+            this.addDirectoryButton.Name = "addDirectoryButton";
+            this.addDirectoryButton.Size = new System.Drawing.Size(41, 26);
+            this.addDirectoryButton.TabIndex = 10;
+            this.addDirectoryButton.Text = "+ ";
+            this.addDirectoryButton.UseVisualStyleBackColor = true;
+            this.addDirectoryButton.Visible = false;
+            this.addDirectoryButton.Click += new System.EventHandler(this.addDirectoryButton_Click);
+            // 
+            // sortDirectoriesLabel
+            // 
+            this.sortDirectoriesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.sortDirectoriesLabel.AutoSize = true;
+            this.sortDirectoriesLabel.Location = new System.Drawing.Point(42, 571);
+            this.sortDirectoriesLabel.Name = "sortDirectoriesLabel";
+            this.sortDirectoriesLabel.Size = new System.Drawing.Size(79, 13);
+            this.sortDirectoriesLabel.TabIndex = 11;
+            this.sortDirectoriesLabel.Text = "Sort Directories";
+            this.sortDirectoriesLabel.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(763, 652);
+            this.ClientSize = new System.Drawing.Size(763, 658);
+            this.Controls.Add(this.sortDirectoriesLabel);
+            this.Controls.Add(this.addDirectoryButton);
             this.Controls.Add(this.previousButton);
             this.Controls.Add(this.nextButton);
             this.Controls.Add(this.statusStrip1);
@@ -154,6 +181,8 @@
         private System.Windows.Forms.ToolStripStatusLabel tooltipStrip;
         private System.Windows.Forms.Button nextButton;
         private System.Windows.Forms.Button previousButton;
+        private System.Windows.Forms.Button addDirectoryButton;
+        private System.Windows.Forms.Label sortDirectoriesLabel;
     }
 }
 

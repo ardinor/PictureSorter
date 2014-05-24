@@ -130,7 +130,9 @@ namespace PictureSorter
                         {
                             fileCount.Text = "Total images: " + pictureList.Count;
                             //imageDetailsLabel.Visible = true;
-                            nextButton.Visible = true;                            
+                            nextButton.Visible = true;
+                            sortDirectoriesLabel.Visible = true;
+                            addDirectoryButton.Visible = true;
                             SetActivePicture(pictureList, 0);
                         }                    
                     }
@@ -171,5 +173,60 @@ namespace PictureSorter
         {
             HandlePrevious();
         }
+
+        private void addDirectoryButton_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+                using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+                {
+                    dialog.Description = "Open a directory you wish to move pictures to";
+                    dialog.RootFolder = Environment.SpecialFolder.MyComputer;
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string folder = dialog.SelectedPath;
+                        string dirName = new DirectoryInfo(folder).Name;                        
+
+                        System.Windows.Forms.Button directoryButton;
+                        directoryButton = new System.Windows.Forms.Button();
+                        directoryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+                        directoryButton.Location = addDirectoryButton.Location; //new System.Drawing.Point(105, 587);
+                        directoryButton.Name = dirName + "Button";
+                        directoryButton.Size = new System.Drawing.Size(41, 26);
+                        directoryButton.TabIndex = addDirectoryButton.TabIndex -1;
+                        directoryButton.AutoSize = true;
+                        directoryButton.Text = dirName;
+                        directoryButton.Visible = true;
+                        directoryButton.UseVisualStyleBackColor = true;
+                        directoryButton.Click += new System.EventHandler(this.directoryButton_Click);
+                        this.Controls.Add(directoryButton);
+
+                        System.Windows.Forms.Label directoryButtonLabel;
+                        directoryButtonLabel = new System.Windows.Forms.Label();
+                        directoryButtonLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+                        directoryButtonLabel.AutoSize = true;
+                        directoryButtonLabel.Location = new System.Drawing.Point(directoryButton.Location.X + (directoryButton.Size.Width/2), 
+                            directoryButton.Location.Y + directoryButton.Size.Height + 5);
+                        directoryButtonLabel.Size = new System.Drawing.Size(79, 13);
+                        directoryButtonLabel.Text = "1";
+                        this.Controls.Add(directoryButtonLabel);
+
+                        //addDirectoryButton.Visible = false;
+                        addDirectoryButton.Location = new System.Drawing.Point(addDirectoryButton.Location.X + directoryButton.Size.Width + 10, addDirectoryButton.Location.Y);
+                        addDirectoryButton.TabIndex = addDirectoryButton.TabIndex + 1;
+                    }
+                }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Failed to open directory: " + ex.Message);
+            //}
+
+        }
+        private void directoryButton_Click(object sender, EventArgs e)
+        {
+            //move the picture to the directory here
+        }
+
     }
 }
