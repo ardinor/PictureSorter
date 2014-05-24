@@ -42,15 +42,19 @@
             // 
             // activePictureBox
             // 
-            this.activePictureBox.Location = new System.Drawing.Point(-1, 42);
+            this.activePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.activePictureBox.Location = new System.Drawing.Point(0, 42);
             this.activePictureBox.Name = "activePictureBox";
-            this.activePictureBox.Size = new System.Drawing.Size(763, 520);
+            this.activePictureBox.Size = new System.Drawing.Size(762, 520);
             this.activePictureBox.TabIndex = 0;
             this.activePictureBox.TabStop = false;
             // 
             // directorySelect
             // 
-            this.directorySelect.Location = new System.Drawing.Point(628, 12);
+            this.directorySelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.directorySelect.Location = new System.Drawing.Point(628, 8);
             this.directorySelect.Name = "directorySelect";
             this.directorySelect.Size = new System.Drawing.Size(123, 27);
             this.directorySelect.TabIndex = 1;
@@ -70,7 +74,7 @@
             // fileCount
             // 
             this.fileCount.AutoSize = true;
-            this.fileCount.Location = new System.Drawing.Point(218, 15);
+            this.fileCount.Location = new System.Drawing.Point(331, 15);
             this.fileCount.Name = "fileCount";
             this.fileCount.Size = new System.Drawing.Size(54, 13);
             this.fileCount.TabIndex = 3;
@@ -94,6 +98,7 @@
             // 
             // nextButton
             // 
+            this.nextButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.nextButton.Location = new System.Drawing.Point(726, 568);
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(36, 26);
@@ -105,6 +110,7 @@
             // 
             // previousButton
             // 
+            this.previousButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.previousButton.Location = new System.Drawing.Point(0, 568);
             this.previousButton.Name = "previousButton";
             this.previousButton.Size = new System.Drawing.Size(36, 26);

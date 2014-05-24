@@ -57,7 +57,7 @@ namespace PictureSorter
             activePictureBox.Image = image;
             if (activePictureBox.Size.Height < image.Height || activePictureBox.Size.Width < image.Width)
             {
-                activePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                activePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 zoomed = true;
             }
             else
@@ -69,6 +69,39 @@ namespace PictureSorter
             if (zoomed)
             {
                 tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + image.Height / activePictureBox.Size.Height;
+            }
+        }
+
+        private void HandleNext()
+        {
+            if (pictureList != null && pictureList.Count - 1 >= activeIndex + 1)
+            {
+                SetActivePicture(pictureList, activeIndex + 1);
+                if (activeIndex == pictureList.Count - 1)
+                {
+                    nextButton.Visible = false;
+                }
+                if (previousButton.Visible == false)
+                {
+                    previousButton.Visible = true;
+                }
+            }
+        }
+
+        private void HandlePrevious()
+        {
+            if (pictureList != null && pictureList.Count - 1 >= activeIndex - 1 && activeIndex - 1 != -1)
+            {
+                SetActivePicture(pictureList, activeIndex - 1);
+
+                if (activeIndex == 0)
+                {
+                    previousButton.Visible = false;
+                }
+                if (nextButton.Visible == false)
+                {
+                    nextButton.Visible = true;
+                }
             }
         }
 
@@ -119,54 +152,24 @@ namespace PictureSorter
             {
                 case Keys.Right:
                 case Keys.Up:
-                    if (pictureList.Count >= activeIndex + 1)
-                    {
-                        SetActivePicture(pictureList, activeIndex + 1);
-                        e.Handled = true;
-                    }               
+                    HandleNext();              
                     break;
 
                 case Keys.Left:
                 case Keys.Down:
-                    if (pictureList.Count >= activeIndex -1)
-                    {
-                        SetActivePicture(pictureList, activeIndex - 1);
-                        e.Handled = true;
-                    }
+                    HandlePrevious();
                     break;
             }            
         }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
-            if (pictureList != null && pictureList.Count-1 >= activeIndex+1)
-            {
-                SetActivePicture(pictureList, activeIndex + 1);
-                if (activeIndex == pictureList.Count-1)
-                {
-                    nextButton.Visible = false;
-                }
-                if (previousButton.Visible == false)
-                {
-                    previousButton.Visible = true;
-                }
-            }
+            HandleNext();
         }
 
         private void previousButton_Click(object sender, EventArgs e)
         {
-            if (pictureList != null && pictureList.Count-1 >= activeIndex - 1 && activeIndex-1 != -1)
-            {
-                SetActivePicture(pictureList, activeIndex - 1);
-            }
-            if (activeIndex == 0)
-            {
-                previousButton.Visible = false;
-            }
-            if (nextButton.Visible == false)
-            {
-                nextButton.Visible = true;
-            }
+            HandlePrevious();
         }
     }
 }
