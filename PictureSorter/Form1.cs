@@ -64,10 +64,6 @@ namespace PictureSorter
             {
                 activePictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
             }
-            //imageHeightLabel.Text = "H: " + image.Height;
-            //imageWidthLabel.Text = "W: " + image.Width;
-            //imageInfoLabel
-            //imageInfoLabel.Visible = true;
             tooltipStrip.Text = "File: " + Path.GetFileName(pictureList[index]) +
                 "   Height: " + image.Height + "   Width: " + image.Width;
             if (zoomed)
@@ -101,6 +97,7 @@ namespace PictureSorter
                         {
                             fileCount.Text = "Total images: " + pictureList.Count;
                             //imageDetailsLabel.Visible = true;
+                            nextButton.Visible = true;                            
                             SetActivePicture(pictureList, 0);
                         }                    
                     }
@@ -122,7 +119,7 @@ namespace PictureSorter
             {
                 case Keys.Right:
                 case Keys.Up:
-                    if (pictureList.Count <= activeIndex + 1)
+                    if (pictureList.Count >= activeIndex + 1)
                     {
                         SetActivePicture(pictureList, activeIndex + 1);
                         e.Handled = true;
@@ -138,6 +135,38 @@ namespace PictureSorter
                     }
                     break;
             }            
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            if (pictureList != null && pictureList.Count-1 >= activeIndex+1)
+            {
+                SetActivePicture(pictureList, activeIndex + 1);
+                if (activeIndex == pictureList.Count-1)
+                {
+                    nextButton.Visible = false;
+                }
+                if (previousButton.Visible == false)
+                {
+                    previousButton.Visible = true;
+                }
+            }
+        }
+
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            if (pictureList != null && pictureList.Count-1 >= activeIndex - 1 && activeIndex-1 != -1)
+            {
+                SetActivePicture(pictureList, activeIndex - 1);
+            }
+            if (activeIndex == 0)
+            {
+                previousButton.Visible = false;
+            }
+            if (nextButton.Visible == false)
+            {
+                nextButton.Visible = true;
+            }
         }
     }
 }

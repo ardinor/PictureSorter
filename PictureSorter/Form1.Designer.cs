@@ -34,6 +34,8 @@
             this.fileCount = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tooltipStrip = new System.Windows.Forms.ToolStripStatusLabel();
+            this.nextButton = new System.Windows.Forms.Button();
+            this.previousButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.activePictureBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -68,10 +70,11 @@
             // fileCount
             // 
             this.fileCount.AutoSize = true;
-            this.fileCount.Location = new System.Drawing.Point(13, 42);
+            this.fileCount.Location = new System.Drawing.Point(218, 15);
             this.fileCount.Name = "fileCount";
-            this.fileCount.Size = new System.Drawing.Size(0, 13);
+            this.fileCount.Size = new System.Drawing.Size(54, 13);
             this.fileCount.TabIndex = 3;
+            this.fileCount.Text = "File Count";
             // 
             // statusStrip1
             // 
@@ -89,13 +92,35 @@
             this.tooltipStrip.Size = new System.Drawing.Size(36, 17);
             this.tooltipStrip.Text = "Ready";
             // 
+            // nextButton
+            // 
+            this.nextButton.Location = new System.Drawing.Point(726, 568);
+            this.nextButton.Name = "nextButton";
+            this.nextButton.Size = new System.Drawing.Size(36, 26);
+            this.nextButton.TabIndex = 8;
+            this.nextButton.Text = "→";
+            this.nextButton.UseVisualStyleBackColor = true;
+            this.nextButton.Visible = false;
+            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            // 
+            // previousButton
+            // 
+            this.previousButton.Location = new System.Drawing.Point(0, 568);
+            this.previousButton.Name = "previousButton";
+            this.previousButton.Size = new System.Drawing.Size(36, 26);
+            this.previousButton.TabIndex = 9;
+            this.previousButton.Text = "←";
+            this.previousButton.UseVisualStyleBackColor = true;
+            this.previousButton.Visible = false;
+            this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
+            // 
             // Form1
             // 
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
-            
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(763, 652);
+            this.Controls.Add(this.previousButton);
+            this.Controls.Add(this.nextButton);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.fileCount);
             this.Controls.Add(this.directoryLabel);
@@ -104,13 +129,12 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "Picture Sorter";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.activePictureBox)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
-
 
         }
 
@@ -122,6 +146,8 @@
         private System.Windows.Forms.Label fileCount;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tooltipStrip;
+        private System.Windows.Forms.Button nextButton;
+        private System.Windows.Forms.Button previousButton;
     }
 }
 
