@@ -60,7 +60,12 @@ namespace PictureSorter
         private void SetActivePicture(List<string> pictureList, int index)
         {
             bool zoomed = false;
-            Image image = Image.FromFile(pictureList[index]);
+            Image image;
+            using (FileStream fs = new FileStream(pictureList[index], FileMode.Open, FileAccess.Read))
+            {
+                image = Image.FromStream(fs);
+            }
+            //Image image = Image.FromFile(pictureList[index]);
             activeIndex = index;
             activePictureBox.Image = image;
             if (activePictureBox.Size.Height < image.Height || activePictureBox.Size.Width < image.Width)
@@ -76,7 +81,7 @@ namespace PictureSorter
                 "   Height: " + image.Height + "   Width: " + image.Width;
             if (zoomed)
             {
-                tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + image.Height / activePictureBox.Size.Height;
+                tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + image.Height / activePictureBox.Size.Height + "%";
             }
         }
 
@@ -159,6 +164,8 @@ namespace PictureSorter
             //need to override IsInputKey
             //http://msdn.microsoft.com/en-us/library/system.windows.forms.control.keydown%28v=vs.110%29.aspx
 
+            e.Handled = true;
+
             switch (e.KeyCode)
             {
                 case Keys.Right:
@@ -172,6 +179,8 @@ namespace PictureSorter
                     break;
 
                 case Keys.D1:
+                case Keys.NumPad1:
+                case Keys.Oem1:
                     if (saveDirectoryButtons.ContainsKey(1))
                         saveDirectoryButtons[1].PerformClick();                
                     break;
@@ -257,7 +266,22 @@ namespace PictureSorter
             //move the picture to the directory here
             //var buttonID = saveDirectoryButtons.FirstOrDefault(x => x.Value == sender).Key;
             saveDirectoryButton button = sender as saveDirectoryButton;
-            MessageBox.Show(button.folderPath);
+            if (button != null)
+            {
+                string activePicture = pictureList[activeIndex];
+                try
+                {                    
+                    pictureList.Remove(activePicture);
+                    SetActivePicture(pictureList, activeIndex + 1);
+                    File.Copy(activePicture, button.folderPath + Path.DirectorySeparatorChar + Path.GetFileName(activePicture));
+                    // It still has the file open...
+                    File.Delete(activePicture);
+                }
+                catch (IOException ex)
+                {
+                    MessageBox.Show("Failed to move picture: " + ex.Message);
+                }
+            }
         }
 
     }
