@@ -11,9 +11,17 @@ using System.IO;
 
 namespace PictureSorter
 {
+
+    public class saveDirectoryButton : System.Windows.Forms.Button
+    {
+        public int ID;
+        public string folderPath;
+    }
+
     public partial class Form1 : Form
     {
         List<string> pictureList;
+        Dictionary<int, saveDirectoryButton> saveDirectoryButtons;
         int activeIndex;
 
         static List<string> ImageFormats = new List<string>
@@ -119,6 +127,7 @@ namespace PictureSorter
                         string folder = dialog.SelectedPath;
                         directoryLabel.Text = "Now sorting - " + folder;
                         pictureList = new List<string>();
+                        saveDirectoryButtons = new Dictionary<int, saveDirectoryButton>();
                         foreach (string path in Directory.GetFiles(folder))
                         {
                             if (ImageFormats.Contains(Path.GetExtension(path), StringComparer.OrdinalIgnoreCase) && CheckValid(path))
@@ -161,6 +170,11 @@ namespace PictureSorter
                 case Keys.Down:
                     HandlePrevious();
                     break;
+
+                case Keys.D1:
+                    if (saveDirectoryButtons.ContainsKey(1))
+                        saveDirectoryButtons[1].PerformClick();                
+                    break;
             }            
         }
 
@@ -185,17 +199,30 @@ namespace PictureSorter
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         string folder = dialog.SelectedPath;
-                        string dirName = new DirectoryInfo(folder).Name;                        
+                        string dirName = new DirectoryInfo(folder).Name;
 
-                        System.Windows.Forms.Button directoryButton;
-                        directoryButton = new System.Windows.Forms.Button();
+                        int newID;
+                        if (saveDirectoryButtons.Count > 0)
+                        {
+                            newID = saveDirectoryButtons.Keys.Max() + 1;
+                        }
+                        else
+                        {
+                            newID = 1;
+                        }
+
+
+                        saveDirectoryButton directoryButton;
+                        directoryButton = new saveDirectoryButton();
                         directoryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-                        directoryButton.Location = addDirectoryButton.Location; //new System.Drawing.Point(105, 587);
+                        directoryButton.Location = addDirectoryButton.Location;
                         directoryButton.Name = dirName + "Button";
                         directoryButton.Size = new System.Drawing.Size(41, 26);
                         directoryButton.TabIndex = addDirectoryButton.TabIndex -1;
                         directoryButton.AutoSize = true;
                         directoryButton.Text = dirName;
+                        directoryButton.folderPath = folder;
+                        directoryButton.ID = newID;
                         directoryButton.Visible = true;
                         directoryButton.UseVisualStyleBackColor = true;
                         directoryButton.Click += new System.EventHandler(this.directoryButton_Click);
@@ -205,11 +232,13 @@ namespace PictureSorter
                         directoryButtonLabel = new System.Windows.Forms.Label();
                         directoryButtonLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
                         directoryButtonLabel.AutoSize = true;
-                        directoryButtonLabel.Location = new System.Drawing.Point(directoryButton.Location.X + (directoryButton.Size.Width/2), 
+                        directoryButtonLabel.Location = new System.Drawing.Point(directoryButton.Location.X + ((directoryButton.Size.Width/2)-5), 
                             directoryButton.Location.Y + directoryButton.Size.Height + 5);
-                        directoryButtonLabel.Size = new System.Drawing.Size(79, 13);
-                        directoryButtonLabel.Text = "1";
+                        directoryButtonLabel.Size = new System.Drawing.Size(10, 10);
+                        directoryButtonLabel.Text = newID.ToString();
                         this.Controls.Add(directoryButtonLabel);
+
+                        saveDirectoryButtons.Add(newID, directoryButton);
 
                         //addDirectoryButton.Visible = false;
                         addDirectoryButton.Location = new System.Drawing.Point(addDirectoryButton.Location.X + directoryButton.Size.Width + 10, addDirectoryButton.Location.Y);
@@ -226,6 +255,9 @@ namespace PictureSorter
         private void directoryButton_Click(object sender, EventArgs e)
         {
             //move the picture to the directory here
+            //var buttonID = saveDirectoryButtons.FirstOrDefault(x => x.Value == sender).Key;
+            saveDirectoryButton button = sender as saveDirectoryButton;
+            MessageBox.Show(button.folderPath);
         }
 
     }
