@@ -81,6 +81,7 @@
             this.fileCount.Size = new System.Drawing.Size(54, 13);
             this.fileCount.TabIndex = 3;
             this.fileCount.Text = "File Count";
+            this.fileCount.Visible = false;
             // 
             // statusStrip1
             // 

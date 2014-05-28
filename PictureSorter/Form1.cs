@@ -16,6 +16,13 @@ namespace PictureSorter
     {
         public int ID;
         public string folderPath;
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            this.ResumeLayout(false);
+
+        }
     }
 
     public partial class Form1 : Form
@@ -41,6 +48,7 @@ namespace PictureSorter
 
         private bool CheckValidImage(string filePath)
         {
+            //this currently causes the file to lock, preventing us from deleting it later
             try
             {
                 Image image = Image.FromFile(filePath);
@@ -54,16 +62,18 @@ namespace PictureSorter
 
         private bool CheckValid(string filePath)
         {
-            return File.Exists(filePath) && CheckValidImage(filePath);
+            return File.Exists(filePath); //&& CheckValidImage(filePath);
         }
 
         private void SetActivePicture(List<string> pictureList, int index)
         {
             bool zoomed = false;
+            activePictureBox.Image = null;
+            //activePictureBox.Dispose();
             Image image;
-            using (FileStream fs = new FileStream(pictureList[index], FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream(pictureList[index], FileMode.Open, FileAccess.ReadWrite, FileShare.Delete))
             {
-                image = Image.FromStream(fs);
+                image = Image.FromStream(fs);                
             }
             //Image image = Image.FromFile(pictureList[index]);
             activeIndex = index;
@@ -142,6 +152,7 @@ namespace PictureSorter
                         }
                         if (pictureList.Count > 0)
                         {
+                            fileCount.Visible = true;
                             fileCount.Text = "Total images: " + pictureList.Count;
                             //imageDetailsLabel.Visible = true;
                             nextButton.Visible = true;
@@ -156,7 +167,6 @@ namespace PictureSorter
             {
                 MessageBox.Show("Failed to open directory: " + ex.Message);
             }
-
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -269,12 +279,13 @@ namespace PictureSorter
             if (button != null)
             {
                 string activePicture = pictureList[activeIndex];
+
                 try
                 {                    
                     pictureList.Remove(activePicture);
-                    SetActivePicture(pictureList, activeIndex + 1);
+                    SetActivePicture(pictureList, activeIndex);
+                    fileCount.Text = "Total images: " + pictureList.Count;
                     File.Copy(activePicture, button.folderPath + Path.DirectorySeparatorChar + Path.GetFileName(activePicture));
-                    // It still has the file open...
                     File.Delete(activePicture);
                 }
                 catch (IOException ex)
@@ -283,6 +294,5 @@ namespace PictureSorter
                 }
             }
         }
-
     }
 }
