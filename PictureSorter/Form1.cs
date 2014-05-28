@@ -43,26 +43,35 @@ namespace PictureSorter
 
         public Form1()
         {
-            InitializeComponent();          
+            InitializeComponent();
         }
 
         private bool CheckValidImage(string filePath)
-        {
-            //this currently causes the file to lock, preventing us from deleting it later
+        {            
             try
             {
-                Image image = Image.FromFile(filePath);
+                //this caused the file to lock
+                //Image image = Image.FromFile(filePath);
+                Image image;
+                using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    image = Image.FromStream(fs);
+                }
             }
-            catch (OutOfMemoryException ex)
+            catch (ArgumentException ex)
             {
                 return false;
             }
+            //catch (OutOfMemoryException ex)
+            //{
+            //    return false;
+            //}
             return true;
         }
 
         private bool CheckValid(string filePath)
         {
-            return File.Exists(filePath); //&& CheckValidImage(filePath);
+            return File.Exists(filePath) && CheckValidImage(filePath);
         }
 
         private void SetActivePicture(List<string> pictureList, int index)
