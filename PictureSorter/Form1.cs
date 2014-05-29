@@ -218,8 +218,8 @@ namespace PictureSorter
 
         private void addDirectoryButton_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 using (FolderBrowserDialog dialog = new FolderBrowserDialog())
                 {
                     dialog.Description = "Open a directory you wish to move pictures to";
@@ -274,11 +274,11 @@ namespace PictureSorter
                         addDirectoryButton.TabIndex = addDirectoryButton.TabIndex + 1;
                     }
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Failed to open directory: " + ex.Message);
-            //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to open directory: " + ex.Message);
+            }
 
         }
         private void directoryButton_Click(object sender, EventArgs e)
@@ -313,17 +313,25 @@ namespace PictureSorter
                 saveDirectoryButton button = sender as saveDirectoryButton;
                 if (button != null)
                 {
-                    using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+                    try
                     {
-                        dialog.Description = "Open a directory you wish to move pictures to";
-                        dialog.RootFolder = Environment.SpecialFolder.MyComputer;
-                        if (dialog.ShowDialog() == DialogResult.OK)
+
+                        using (FolderBrowserDialog dialog = new FolderBrowserDialog())
                         {
-                            string folder = dialog.SelectedPath;
-                            string dirName = new DirectoryInfo(folder).Name;
-                            button.Text = dirName;
-                            button.folderPath = folder;
+                            dialog.Description = "Open a directory you wish to move pictures to";
+                            dialog.RootFolder = Environment.SpecialFolder.MyComputer;
+                            if (dialog.ShowDialog() == DialogResult.OK)
+                            {
+                                string folder = dialog.SelectedPath;
+                                string dirName = new DirectoryInfo(folder).Name;
+                                button.Text = dirName;
+                                button.folderPath = folder;
+                            }
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Failed to open directory: " + ex.Message);
                     }
                 }
             }
