@@ -239,7 +239,6 @@ namespace PictureSorter
                             newID = 1;
                         }
 
-
                         saveDirectoryButton directoryButton;
                         directoryButton = new saveDirectoryButton();
                         directoryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -254,6 +253,8 @@ namespace PictureSorter
                         directoryButton.Visible = true;
                         directoryButton.UseVisualStyleBackColor = true;
                         directoryButton.Click += new System.EventHandler(this.directoryButton_Click);
+                        // Add the event handler to allow changing the directory of the folder
+                        directoryButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.directoryButton_MouseUp);
                         this.Controls.Add(directoryButton);
 
                         System.Windows.Forms.Label directoryButtonLabel;
@@ -300,6 +301,30 @@ namespace PictureSorter
                 catch (IOException ex)
                 {
                     MessageBox.Show("Failed to move picture: " + ex.Message);
+                }
+            }
+        }
+
+        private void directoryButton_MouseUp(object sender, MouseEventArgs e)
+        {
+            // When we right click on a button, allow the user to change the save directory
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                saveDirectoryButton button = sender as saveDirectoryButton;
+                if (button != null)
+                {
+                    using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+                    {
+                        dialog.Description = "Open a directory you wish to move pictures to";
+                        dialog.RootFolder = Environment.SpecialFolder.MyComputer;
+                        if (dialog.ShowDialog() == DialogResult.OK)
+                        {
+                            string folder = dialog.SelectedPath;
+                            string dirName = new DirectoryInfo(folder).Name;
+                            button.Text = dirName;
+                            button.folderPath = folder;
+                        }
+                    }
                 }
             }
         }
