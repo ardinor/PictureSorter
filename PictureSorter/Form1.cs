@@ -11,20 +11,6 @@ using System.IO;
 
 namespace PictureSorter
 {
-
-    public class saveDirectoryButton : System.Windows.Forms.Button
-    {
-        public int ID;
-        public string folderPath;
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            this.ResumeLayout(false);
-
-        }
-    }
-
     public partial class Form1 : Form
     {
         List<string> pictureList;
@@ -315,7 +301,6 @@ namespace PictureSorter
                 {
                     try
                     {
-
                         using (FolderBrowserDialog dialog = new FolderBrowserDialog())
                         {
                             dialog.Description = "Open a directory you wish to move pictures to";
