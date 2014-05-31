@@ -64,13 +64,11 @@ namespace PictureSorter
         {
             bool zoomed = false;
             activePictureBox.Image = null;
-            //activePictureBox.Dispose();
             Image image;
             using (FileStream fs = new FileStream(pictureList[index], FileMode.Open, FileAccess.ReadWrite, FileShare.Delete))
             {
                 image = Image.FromStream(fs);                
             }
-            //Image image = Image.FromFile(pictureList[index]);
             activeIndex = index;
             activePictureBox.Image = image;
             if (activePictureBox.Size.Height < image.Height || activePictureBox.Size.Width < image.Width)
@@ -86,7 +84,7 @@ namespace PictureSorter
                 "   Height: " + image.Height + "   Width: " + image.Width;
             if (zoomed)
             {
-                tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + image.Height / activePictureBox.Size.Height + "%";
+                tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + activePictureBox.Size.Height / image.Height +"%";
             }
         }
 
@@ -164,7 +162,20 @@ namespace PictureSorter
             }
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void button_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Down:
+                case Keys.Up:
+                case Keys.Right:
+                case Keys.Left:
+                    e.IsInputKey = true;
+                    break;
+            }
+        }
+
+        private void button_KeyDown(object sender, KeyEventArgs e)
         {
             //need to override IsInputKey
             //http://msdn.microsoft.com/en-us/library/system.windows.forms.control.keydown%28v=vs.110%29.aspx

@@ -3,13 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PictureSorter
 {
-    public class saveDirectoryButton : System.Windows.Forms.Button
+    public class saveDirectoryButton : Button
     {
         public int ID;
         public string folderPath;
+
+        protected override bool IsInputKey(Keys keyData)
+        {
+            if (keyData == Keys.Up)
+            {
+                return true;
+            }
+            else if (keyData == Keys.Down)
+            {
+                return true;
+            }
+            else if (keyData == Keys.Left)
+            {
+                return true;
+            }
+            else if (keyData == Keys.Right)
+            {
+                return true;
+            }
+            else
+            {
+                return base.IsInputKey(keyData);
+            }
+        }
 
         private void InitializeComponent()
         {
@@ -17,4 +42,69 @@ namespace PictureSorter
             this.ResumeLayout(false);
         }
     }
+
+    public class sorterPictureBox : PictureBox
+    {
+                
+        protected override bool IsInputKey(Keys keyData)
+        {
+            if (keyData == Keys.Up)
+            {
+                return true;
+            }
+            else if (keyData == Keys.Down)
+            {
+                return true;
+            }
+            else if (keyData == Keys.Left)
+            {
+                return true;
+            }
+            else if (keyData == Keys.Right)
+            {
+                return true;
+            }
+            else
+            {
+                return base.IsInputKey(keyData);
+            }
+        }
+
+    }
+
+    public class sorterButton : Button 
+    {        
+        protected override bool IsInputKey(Keys keyData)
+        {
+            if (keyData == Keys.Up)
+            {
+                return true;
+            }
+            else if (keyData == Keys.Down)
+            {
+                return true;
+            }
+            else if (keyData == Keys.Left)
+            {
+                return true;
+            }
+            else if (keyData == Keys.Right)
+            {
+                return true;
+            }
+            else
+            {
+                return base.IsInputKey(keyData);
+            }
+        }
+
+    }
+
+
+
+        //private System.Windows.Forms.Label directoryLabel;
+        //private System.Windows.Forms.Label fileCount;
+        //private System.Windows.Forms.StatusStrip statusStrip1;
+        //private System.Windows.Forms.ToolStripStatusLabel tooltipStrip;
+        //private System.Windows.Forms.Label sortDirectoriesLabel;
 }

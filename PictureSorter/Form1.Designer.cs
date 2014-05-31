@@ -63,6 +63,8 @@
             this.directorySelect.Text = "Select Directory";
             this.directorySelect.UseVisualStyleBackColor = true;
             this.directorySelect.Click += new System.EventHandler(this.directorySelect_Click);
+            this.directorySelect.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button_PreviewKeyDown);
+            this.directorySelect.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button_KeyDown);
             // 
             // directoryLabel
             // 
@@ -110,6 +112,8 @@
             this.nextButton.UseVisualStyleBackColor = true;
             this.nextButton.Visible = false;
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            this.nextButton.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button_PreviewKeyDown);
+            this.nextButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button_KeyDown);
             // 
             // previousButton
             // 
@@ -122,6 +126,8 @@
             this.previousButton.UseVisualStyleBackColor = true;
             this.previousButton.Visible = false;
             this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
+            this.previousButton.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button_PreviewKeyDown);
+            this.previousButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button_KeyDown);
             // 
             // addDirectoryButton
             // 
@@ -134,6 +140,8 @@
             this.addDirectoryButton.UseVisualStyleBackColor = true;
             this.addDirectoryButton.Visible = false;
             this.addDirectoryButton.Click += new System.EventHandler(this.addDirectoryButton_Click);
+            this.addDirectoryButton.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button_PreviewKeyDown);
+            this.addDirectoryButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button_KeyDown);
             // 
             // sortDirectoriesLabel
             // 
@@ -163,7 +171,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "Picture Sorter";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            //this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.activePictureBox)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
