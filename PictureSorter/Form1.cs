@@ -84,7 +84,9 @@ namespace PictureSorter
                 "   Height: " + image.Height + "   Width: " + image.Width;
             if (zoomed)
             {
-                tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + activePictureBox.Size.Height / image.Height +"%";
+                double perc = (double)activePictureBox.Size.Height / image.Height;
+                perc = perc * 100;
+                tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + String.Format("{0:0.##}", perc) + "%";
             }
         }
 
