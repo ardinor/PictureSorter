@@ -123,6 +123,11 @@ namespace PictureSorter
             }
         }
 
+        private void UndoMove()
+        {
+            //undo move
+        }
+
         private void directorySelect_Click(object sender, EventArgs e)
         {
             try
@@ -203,6 +208,14 @@ namespace PictureSorter
                         saveDirectoryButtons[1].PerformClick();                
                     break;
             }            
+        }
+
+        private void form_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.Z)
+            {
+                UndoMove();
+            }
         }
 
         private void nextButton_Click(object sender, EventArgs e)
