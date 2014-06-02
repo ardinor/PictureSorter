@@ -62,31 +62,40 @@ namespace PictureSorter
 
         private void SetActivePicture(List<string> pictureList, int index)
         {
-            bool zoomed = false;
-            activePictureBox.Image = null;
-            Image image;
-            using (FileStream fs = new FileStream(pictureList[index], FileMode.Open, FileAccess.ReadWrite, FileShare.Delete))
+            if (pictureList.Count > 0)
             {
-                image = Image.FromStream(fs);                
-            }
-            activeIndex = index;
-            activePictureBox.Image = image;
-            if (activePictureBox.Size.Height < image.Height || activePictureBox.Size.Width < image.Width)
-            {
-                activePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                zoomed = true;
+
+                bool zoomed = false;
+                activePictureBox.Image = null;
+                Image image;
+                using (FileStream fs = new FileStream(pictureList[index], FileMode.Open, FileAccess.ReadWrite, FileShare.Delete))
+                {
+                    image = Image.FromStream(fs);                
+                }
+                activeIndex = index;
+                activePictureBox.Image = image;
+                if (activePictureBox.Size.Height < image.Height || activePictureBox.Size.Width < image.Width)
+                {
+                    activePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    zoomed = true;
+                }
+                else
+                {
+                    activePictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+                }
+                tooltipStrip.Text = "File: " + Path.GetFileName(pictureList[index]) +
+                    "   Height: " + image.Height + "   Width: " + image.Width;
+                if (zoomed)
+                {
+                    double perc = (double)activePictureBox.Size.Height / image.Height;
+                    perc = perc * 100;
+                    tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + String.Format("{0:0.##}", perc) + "%";
+                }
+
             }
             else
             {
-                activePictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
-            }
-            tooltipStrip.Text = "File: " + Path.GetFileName(pictureList[index]) +
-                "   Height: " + image.Height + "   Width: " + image.Width;
-            if (zoomed)
-            {
-                double perc = (double)activePictureBox.Size.Height / image.Height;
-                perc = perc * 100;
-                tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + String.Format("{0:0.##}", perc) + "%";
+                activePictureBox.Image = null;
             }
         }
 
@@ -305,10 +314,18 @@ namespace PictureSorter
                 try
                 {                    
                     pictureList.Remove(activePicture);
-                    SetActivePicture(pictureList, activeIndex);
+                    SetActivePicture(pictureList, activeIndex);             
                     fileCount.Text = "Total images: " + pictureList.Count;
                     File.Copy(activePicture, button.folderPath + Path.DirectorySeparatorChar + Path.GetFileName(activePicture));
                     File.Delete(activePicture);
+
+                    this.undoToolStripMenuEntry = new ToolStripMenuItem();
+                    this.undoToolStripMenuEntry.Name = Path.GetFileName(activePicture);
+                    this.undoToolStripMenuEntry.Size = new System.Drawing.Size(124, 22);
+                    this.undoToolStripMenuEntry.Text = Path.GetFileName(activePicture);
+                    this.undoToolStripMenuEntry.Click += new System.EventHandler(this.undoToolStripMenuEntry_Click);
+
+                    this.undoToolStripMenuItem.DropDownItems.Add(this.undoToolStripMenuEntry);
                 }
                 catch (IOException ex)
                 {
@@ -346,6 +363,17 @@ namespace PictureSorter
                     }
                 }
             }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void undoToolStripMenuEntry_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem senderItem = sender as ToolStripMenuItem;
+            MessageBox.Show(senderItem.Text);
         }
     }
 }
