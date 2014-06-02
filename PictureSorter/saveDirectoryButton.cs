@@ -43,63 +43,11 @@ namespace PictureSorter
         }
     }
 
-    public class sorterPictureBox : PictureBox
+    public class undoMenuItem : ToolStripMenuItem
     {
-                
-        protected override bool IsInputKey(Keys keyData)
-        {
-            if (keyData == Keys.Up)
-            {
-                return true;
-            }
-            else if (keyData == Keys.Down)
-            {
-                return true;
-            }
-            else if (keyData == Keys.Left)
-            {
-                return true;
-            }
-            else if (keyData == Keys.Right)
-            {
-                return true;
-            }
-            else
-            {
-                return base.IsInputKey(keyData);
-            }
-        }
-
+        public string oldPath;
+        public string newPath;
     }
-
-    public class sorterButton : Button 
-    {        
-        protected override bool IsInputKey(Keys keyData)
-        {
-            if (keyData == Keys.Up)
-            {
-                return true;
-            }
-            else if (keyData == Keys.Down)
-            {
-                return true;
-            }
-            else if (keyData == Keys.Left)
-            {
-                return true;
-            }
-            else if (keyData == Keys.Right)
-            {
-                return true;
-            }
-            else
-            {
-                return base.IsInputKey(keyData);
-            }
-        }
-
-    }
-
 
 
         //private System.Windows.Forms.Label directoryLabel;

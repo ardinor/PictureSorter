@@ -319,10 +319,12 @@ namespace PictureSorter
                     File.Copy(activePicture, button.folderPath + Path.DirectorySeparatorChar + Path.GetFileName(activePicture));
                     File.Delete(activePicture);
 
-                    this.undoToolStripMenuEntry = new ToolStripMenuItem();
+                    this.undoToolStripMenuEntry = new undoMenuItem();
                     this.undoToolStripMenuEntry.Name = Path.GetFileName(activePicture);
                     this.undoToolStripMenuEntry.Size = new System.Drawing.Size(124, 22);
-                    this.undoToolStripMenuEntry.Text = Path.GetFileName(activePicture);
+                    this.undoToolStripMenuEntry.Text = Path.GetFileName(activePicture) + "  ->  " + button.folderPath;
+                    this.undoToolStripMenuEntry.oldPath = activePicture;
+                    this.undoToolStripMenuEntry.newPath = button.folderPath + Path.DirectorySeparatorChar + Path.GetFileName(activePicture);
                     this.undoToolStripMenuEntry.Click += new System.EventHandler(this.undoToolStripMenuEntry_Click);
 
                     this.undoToolStripMenuItem.DropDownItems.Add(this.undoToolStripMenuEntry);
@@ -372,8 +374,13 @@ namespace PictureSorter
 
         private void undoToolStripMenuEntry_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem senderItem = sender as ToolStripMenuItem;
-            MessageBox.Show(senderItem.Text);
+            undoMenuItem senderItem = sender as undoMenuItem;
+            File.Copy(senderItem.newPath, senderItem.oldPath);
+            File.Delete(senderItem.newPath);
+            pictureList.Insert(activeIndex, senderItem.oldPath);
+            SetActivePicture(pictureList, activeIndex);
+            fileCount.Text = "Total images: " + pictureList.Count;
+            this.undoToolStripMenuItem.DropDownItems.Remove(senderItem);
         }
     }
 }

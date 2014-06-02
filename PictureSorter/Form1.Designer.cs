@@ -276,7 +276,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quickHelpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuEntry;
+        private undoMenuItem undoToolStripMenuEntry;
     }
 }
 
