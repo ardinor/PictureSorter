@@ -61,6 +61,7 @@
             this.activePictureBox.Size = new System.Drawing.Size(762, 507);
             this.activePictureBox.TabIndex = 0;
             this.activePictureBox.TabStop = false;
+            this.activePictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button_PreviewKeyDown);
             // 
             // directorySelect
             // 
@@ -174,6 +175,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(763, 24);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button_PreviewKeyDown);
             // 
             // fileToolStripMenuItem
             // 

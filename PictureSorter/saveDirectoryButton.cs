@@ -12,29 +12,29 @@ namespace PictureSorter
         public int ID;
         public string folderPath;
 
-        protected override bool IsInputKey(Keys keyData)
-        {
-            if (keyData == Keys.Up)
-            {
-                return true;
-            }
-            else if (keyData == Keys.Down)
-            {
-                return true;
-            }
-            else if (keyData == Keys.Left)
-            {
-                return true;
-            }
-            else if (keyData == Keys.Right)
-            {
-                return true;
-            }
-            else
-            {
-                return base.IsInputKey(keyData);
-            }
-        }
+        //protected override bool IsInputKey(Keys keyData)
+        //{
+            //if (keyData == Keys.Up)
+            //{
+            //    return true;
+            //}
+            //else if (keyData == Keys.Down)
+            //{
+            //    return true;
+            //}
+            //else if (keyData == Keys.Left)
+            //{
+            //    return true;
+            //}
+            //else if (keyData == Keys.Right)
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return base.IsInputKey(keyData);
+            //}
+        //}
 
         private void InitializeComponent()
         {

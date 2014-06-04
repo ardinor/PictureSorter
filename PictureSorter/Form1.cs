@@ -91,7 +91,6 @@ namespace PictureSorter
                     perc = perc * 100;
                     tooltipStrip.Text = tooltipStrip.Text + "   Zoom: " + String.Format("{0:0.##}", perc) + "%";
                 }
-
             }
             else
             {
@@ -234,7 +233,6 @@ namespace PictureSorter
                     undoMenuItem lastAdded = (undoMenuItem)this.undoToolStripMenuItem.DropDownItems[this.undoToolStripMenuItem.DropDownItems.Count-1];
                     UndoMove(lastAdded);
                 }
-
             }
         }
 
@@ -285,6 +283,8 @@ namespace PictureSorter
                         directoryButton.Visible = true;
                         directoryButton.UseVisualStyleBackColor = true;
                         directoryButton.Click += new System.EventHandler(this.directoryButton_Click);
+                        directoryButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button_KeyDown);
+                        directoryButton.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.button_PreviewKeyDown);
                         // Add the event handler to allow changing the directory of the folder
                         directoryButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.directoryButton_MouseUp);
                         this.Controls.Add(directoryButton);
