@@ -132,9 +132,15 @@ namespace PictureSorter
             }
         }
 
-        private void UndoMove()
+        private void UndoMove(undoMenuItem menuItem)
         {
             //undo move
+            File.Copy(menuItem.newPath, menuItem.oldPath);
+            File.Delete(menuItem.newPath);
+            pictureList.Insert(activeIndex, menuItem.oldPath);
+            SetActivePicture(pictureList, activeIndex);
+            fileCount.Text = "Total images: " + pictureList.Count;
+            this.undoToolStripMenuItem.DropDownItems.Remove(menuItem);
         }
 
         private void directorySelect_Click(object sender, EventArgs e)
@@ -223,7 +229,12 @@ namespace PictureSorter
         {
             if (e.Control && e.KeyCode == Keys.Z)
             {
-                UndoMove();
+                if (this.undoToolStripMenuItem.DropDownItems.Count > 0)
+                {
+                    undoMenuItem lastAdded = (undoMenuItem)this.undoToolStripMenuItem.DropDownItems[this.undoToolStripMenuItem.DropDownItems.Count-1];
+                    UndoMove(lastAdded);
+                }
+
             }
         }
 
@@ -375,12 +386,7 @@ namespace PictureSorter
         private void undoToolStripMenuEntry_Click(object sender, EventArgs e)
         {
             undoMenuItem senderItem = sender as undoMenuItem;
-            File.Copy(senderItem.newPath, senderItem.oldPath);
-            File.Delete(senderItem.newPath);
-            pictureList.Insert(activeIndex, senderItem.oldPath);
-            SetActivePicture(pictureList, activeIndex);
-            fileCount.Text = "Total images: " + pictureList.Count;
-            this.undoToolStripMenuItem.DropDownItems.Remove(senderItem);
+            UndoMove(senderItem);
         }
     }
 }
