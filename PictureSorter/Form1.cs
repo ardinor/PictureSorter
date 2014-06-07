@@ -317,6 +317,8 @@ namespace PictureSorter
                         directoryButtonLabel.Text = newID.ToString();
                         this.Controls.Add(directoryButtonLabel);
 
+                        // Link the label with the button so we can reference it later
+                        directoryButton.saveDirectoryButtonLabel = directoryButtonLabel;
                         saveDirectoryButtons.Add(newID, directoryButton);
 
                         // Figure out where the new button will be placed
@@ -350,7 +352,7 @@ namespace PictureSorter
             //move the picture to the directory here
             //var buttonID = saveDirectoryButtons.FirstOrDefault(x => x.Value == sender).Key;
             saveDirectoryButton button = sender as saveDirectoryButton;
-            if (button != null)
+            if (button != null && button.folderPath != null)
             {
                 string activePicture = pictureList[activeIndex];
 
@@ -377,6 +379,30 @@ namespace PictureSorter
                     MessageBox.Show("Failed to move picture: " + ex.Message);
                 }
             }
+            else if (button != null && button.folderPath == null)
+            {
+                try
+                {
+                    using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+                    {
+                        dialog.Description = "Open a directory you wish to move pictures to";
+                        dialog.RootFolder = Environment.SpecialFolder.MyComputer;
+                        if (dialog.ShowDialog() == DialogResult.OK)
+                        {
+                            string folder = dialog.SelectedPath;
+                            string dirName = new DirectoryInfo(folder).Name;
+                            button.Text = dirName;
+                            button.folderPath = folder;
+                            button.Name = dirName + "Button";
+                            button.saveDirectoryButtonLabel.Visible = true;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to open directory: " + ex.Message);
+                }
+            }
         }
 
         private void directoryButton_MouseUp(object sender, MouseEventArgs e)
@@ -385,7 +411,7 @@ namespace PictureSorter
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 saveDirectoryButton button = sender as saveDirectoryButton;
-                if (button != null)
+                if (button != null && button.folderPath != null)
                 {
                     try
                     {
@@ -399,6 +425,23 @@ namespace PictureSorter
                                 string dirName = new DirectoryInfo(folder).Name;
                                 button.Text = dirName;
                                 button.folderPath = folder;
+                                button.Name = dirName + "Button";
+                            }
+                            else
+                            {
+                                DialogResult dialogResult = MessageBox.Show("Do you want to delete this button instead?", 
+                                    "Delete this button", MessageBoxButtons.YesNo);
+                                if (dialogResult == DialogResult.Yes)
+                                {
+                                    //maybe when we delete instead shuffle the buttons down to replace it's location?
+
+                                    // If we're removing the button, remove the save folder path and replace the text
+                                    button.folderPath = null;
+                                    button.Text = "+ ";
+                                    button.Name = "unassignedsaveDirectoryButton";
+                                    // hide the label as well
+                                    button.saveDirectoryButtonLabel.Visible = false;
+                                }
                             }
                         }
                     }

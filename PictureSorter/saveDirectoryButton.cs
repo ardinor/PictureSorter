@@ -11,6 +11,7 @@ namespace PictureSorter
     {
         public int ID;
         public string folderPath;
+        public System.Windows.Forms.Label saveDirectoryButtonLabel;
 
         //protected override bool IsInputKey(Keys keyData)
         //{
