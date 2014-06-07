@@ -248,6 +248,8 @@ namespace PictureSorter
 
         private void addDirectoryButton_Click(object sender, EventArgs e)
         {
+            Button senderButton = sender as Button;
+
             try
             {
                 using (FolderBrowserDialog dialog = new FolderBrowserDialog())
@@ -272,10 +274,10 @@ namespace PictureSorter
                         saveDirectoryButton directoryButton;
                         directoryButton = new saveDirectoryButton();
                         directoryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-                        directoryButton.Location = addDirectoryButton.Location;
+                        directoryButton.Location = senderButton.Location;
                         directoryButton.Name = dirName + "Button";
                         directoryButton.Size = new System.Drawing.Size(41, 26);
-                        directoryButton.TabIndex = addDirectoryButton.TabIndex -1;
+                        directoryButton.TabIndex = senderButton.TabIndex - 1;
                         directoryButton.AutoSize = true;
                         directoryButton.Text = dirName;
                         directoryButton.folderPath = folder;
@@ -301,9 +303,21 @@ namespace PictureSorter
 
                         saveDirectoryButtons.Add(newID, directoryButton);
 
-                        //addDirectoryButton.Visible = false;
-                        addDirectoryButton.Location = new System.Drawing.Point(addDirectoryButton.Location.X + directoryButton.Size.Width + 10, addDirectoryButton.Location.Y);
-                        addDirectoryButton.TabIndex = addDirectoryButton.TabIndex + 1;
+                        // Figure out where the new button will be placed
+                        // If it's outside the bounds of the form, over will be over the nextButton, don't place it, just hide it
+                        int newXLoc = senderButton.Location.X + directoryButton.Size.Width + 10;
+                        Rectangle formSize = RectangleToScreen(this.ClientRectangle);
+
+                        if (newXLoc + senderButton.Width > formSize.Width || newXLoc + senderButton.Width > nextButton.Location.X)
+                        {
+                            senderButton.Visible = false;
+                        }
+                        else
+                        {
+                            senderButton.Location = new System.Drawing.Point(newXLoc, senderButton.Location.Y);
+                            senderButton.TabIndex = senderButton.TabIndex + 1;
+                        }
+
                     }
                 }
             }
