@@ -142,6 +142,22 @@ namespace PictureSorter
             this.undoToolStripMenuItem.DropDownItems.Remove(menuItem);
         }
 
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
+            Form senderForm = sender as Form;
+            //if the addDirectoryButton isn't visible (because it would be outside the confines of the form before
+            // the resize), check to see if it falls within the confines of the form now
+            if (addDirectoryButton.Visible == false)
+            {
+                //Ensure it is inside the resized form and that is isn't occupying the same location as the nextButton
+                if (addDirectoryButton.Location.X + addDirectoryButton.Width < senderForm.ClientRectangle.Width &&
+                    addDirectoryButton.Location.X + addDirectoryButton.Width < nextButton.Location.X)
+                {
+                    addDirectoryButton.Visible = true;
+                }
+            }
+        }
+
         private void directorySelect_Click(object sender, EventArgs e)
         {
             try
@@ -311,6 +327,8 @@ namespace PictureSorter
                         if (newXLoc + senderButton.Width > formSize.Width || newXLoc + senderButton.Width > nextButton.Location.X)
                         {
                             senderButton.Visible = false;
+                            senderButton.Location = new System.Drawing.Point(newXLoc, senderButton.Location.Y);
+                            senderButton.TabIndex = senderButton.TabIndex + 1;
                         }
                         else
                         {

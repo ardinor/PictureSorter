@@ -189,14 +189,14 @@
             // selectDirectoryToolStripMenuItem
             // 
             this.selectDirectoryToolStripMenuItem.Name = "selectDirectoryToolStripMenuItem";
-            this.selectDirectoryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectDirectoryToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.selectDirectoryToolStripMenuItem.Text = "Select Directory";
             this.selectDirectoryToolStripMenuItem.Click += new System.EventHandler(this.directorySelect_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -247,6 +247,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "Picture Sorter";
+            this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.form_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.activePictureBox)).EndInit();
             this.statusStrip1.ResumeLayout(false);
