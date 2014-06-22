@@ -467,7 +467,7 @@ namespace PictureSorter
         private void quickHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             QuickHelpForm quickHelp = new QuickHelpForm();
-            quickHelp.Show();
+            quickHelp.ShowDialog(this);
         }
     }
 }
