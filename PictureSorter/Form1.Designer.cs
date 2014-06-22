@@ -218,13 +218,14 @@
             // quickHelpToolStripMenuItem
             // 
             this.quickHelpToolStripMenuItem.Name = "quickHelpToolStripMenuItem";
-            this.quickHelpToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.quickHelpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.quickHelpToolStripMenuItem.Text = "Quick Help";
+            this.quickHelpToolStripMenuItem.Click += new System.EventHandler(this.quickHelpToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // Form1
